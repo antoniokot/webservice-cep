@@ -63,6 +63,124 @@ public class Clientes
 
     }
 
+    public static void excluir (int codCliente) throws Exception
+    {
+        try
+        {
+            String sql = "";
+
+            sql = "DELETE FROM Cliente_ArqServ WHERE codCliente = ?";
+
+            BDSQLServer.COMANDO.prepareStatement(sql);
+
+            BDSQLServer.COMANDO.setInt(1,codCliente);
+
+            BDSQLServer.COMANDO.executeUpdate();
+            BDSQLServer.COMANDO.commit();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao excluir cliente");
+        }
+
+    }
+
+    public static void alterar (Cliente cliente, int codigo) throws Exception
+    {
+        if (cliente==null)
+            throw new Exception ("Cliente nao fornecido");
+
+        if (!cadastrado (codigo))
+            throw new Exception ("Nao cadastrado");
+
+        try
+        {
+            String sql;
+
+            sql = "UPDATE Cliente_ArqServ " +
+                    "SET NOME = ? " +
+                    "SET TELEFONE = ? " +
+                    "SET EMAIL = ?" +
+                    "SET CEP = ?" +
+                    "SET NUMEROIMOVEL = ?" +
+                    "SET COMPLEMENTO = ?" +
+                    "WHERE CODIGO = ?";
+
+            BDSQLServer.COMANDO.prepareStatement (sql);
+
+            BDSQLServer.COMANDO.setString (1, cliente.getNome ());
+            BDSQLServer.COMANDO.setString  (2, cliente.getTelefone ());
+            BDSQLServer.COMANDO.setString    (3, cliente.getEmail ());
+            BDSQLServer.COMANDO.setString    (4, cliente.getCep ());
+            BDSQLServer.COMANDO.setInt    (5, cliente.getNumeroImovel ());
+            BDSQLServer.COMANDO.setString    (6, cliente.getComplemento ());
+            BDSQLServer.COMANDO.setInt    (7, codigo );
+
+            BDSQLServer.COMANDO.executeUpdate ();
+            BDSQLServer.COMANDO.commit        ();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao atualizar dados do cliente");
+        }
+    }
+
+    public static Cliente getCliente (int codCliente) throws Exception
+    {
+        Cliente cliente = null;
+        try
+        {
+            String sql = "";
+
+            sql = "SELECT * FROM Cliente_ArqServ WHERE codCliente = ?";
+
+            BDSQLServer.COMANDO.prepareStatement(sql);
+
+            BDSQLServer.COMANDO.setInt(1,codCliente);
+
+            MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+
+            if (!resultado.first())
+                throw new Exception ("Nao cadastrado");
+
+            cliente = new Cliente(resultado.getString("nome"),
+                                    resultado.getString("telefone"),
+                                    resultado.getString("email"),
+                                    resultado.getString("cep"),
+                                    resultado.getInt("numeroImovel"),
+                                    resultado.getString("complemento"));
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao recuperar cliente");
+        }
+
+        return cliente;
+    }
+
+    public static MeuResultSet getClientes () throws Exception
+    {
+        MeuResultSet resultado = null;
+
+        try
+        {
+            String sql;
+
+            sql = "SELECT * " +
+                    "FROM Cliente_ArqServ";
+
+            BDSQLServer.COMANDO.prepareStatement (sql);
+
+            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao recuperar clientes");
+        }
+
+        return resultado;
+    }
+
 }
 
 
