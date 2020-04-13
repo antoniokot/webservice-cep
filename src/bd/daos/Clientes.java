@@ -33,11 +33,38 @@ public class Clientes
         return retorno;
     }
 
+    public static boolean emailCadastrado(String email) throws Exception
+    {
+        boolean retorno = false;
+
+        try
+        {
+            String sql = "";
+
+            sql = "SELECT * FROM Cliente_ArqServ WHERE email = ?";
+
+            BDSQLServer.COMANDO.prepareStatement(sql);
+
+            BDSQLServer.COMANDO.setString(1, email);
+
+            MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery();
+
+            retorno = resultado.first();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception("Erro ao procurar cliente");
+        }
+
+        return retorno;
+    }
+
     public static void incluir (Cliente cliente) throws Exception
     {
         if(cliente == null)
             throw new Exception("Cliente não fornecido");
-
+        if(emailCadastrado(cliente.getEmail()))
+            throw new Exception("Email já usado");
         try
         {
             String sql = "";
