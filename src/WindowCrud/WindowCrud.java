@@ -2,6 +2,8 @@ package WindowCrud;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *Classe que constitui a janela para um programa CRUD.
@@ -48,13 +50,19 @@ public class WindowCrud extends JFrame
 
     /**
      * Construtor da classe WindowCrud.
-     * Neste construtor serÃ¡ adicionado e posicionados ao painel principal(mainPainel)
+     * Neste construtor serão adicionados e posicionados ao painel principal
      * todos os outros elementos de dentro do painel.
-     * @author Matheus Seiji Noda
+     * @author Matheus Seiji Noda and Antônio Hideto Borges Kotsubo
+     * @since 2020
      * */
     public WindowCrud()
     {
         super("Consulta de Endereço");
+        
+        fieldRua.setEnabled(false);
+        fieldBairro.setEnabled(false);
+        fieldCidade.setEnabled(false);
+        fieldEstado.setEnabled(false);
 
         JPanel mainPainel = new JPanel(new GridBagLayout());
         JPanel btnPainel = new JPanel(new GridBagLayout());
@@ -74,21 +82,36 @@ public class WindowCrud extends JFrame
         constraints.gridy = 0;
         btnBuscar.setBounds(45,50,80,20);
         btnPainel.add(btnBuscar, constraints);
-
+        
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 1;
         btnCancelar.setBounds(150,50,80,20);
         btnPainel.add(btnCancelar, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 0;
         constraints.gridy = 20;
+        
         btnAdicionar.setBounds(10, 170, 76, 20);
         btnPainel.add(btnAdicionar, constraints);
-
+        
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 1;
+        constraints.gridy = 20;
         btnDeletar.setBounds(100, 170, 75, 20);
         btnPainel.add(btnDeletar, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 2;
+        constraints.gridy = 20;
         btnAlterar.setBounds(190, 170, 75, 20);
         btnPainel.add(btnAlterar, constraints);
 
@@ -96,82 +119,159 @@ public class WindowCrud extends JFrame
         constraints.insets = new Insets(5,10,5,10);
 
         //Pessoa
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 0;
         clientePainel.add(lblId, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 0;
         clientePainel.add(fieldId, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 1;
         clientePainel.add(lblNome, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 1;
         clientePainel.add(fieldNome, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 2;
         clientePainel.add(lblTelefone,constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 2;
         clientePainel.add(fieldTelefone, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 3;
         clientePainel.add(lblEmail, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 3;
         clientePainel.add(fieldEmail, constraints);
 
         //EndereÃ§o
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 0;
         enderecoPainel.add(lblCEP, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 0;
         enderecoPainel.add(fieldCEP, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 1;
         enderecoPainel.add(lblNumeroImovel, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 1;
         enderecoPainel.add(fieldNumeroImovel, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 2;
         enderecoPainel.add(lblComplemento, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 2;
         enderecoPainel.add(fieldComplemento, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 3;
         enderecoPainel.add(lblRua, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 3;
         enderecoPainel.add(fieldRua, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 4;
         enderecoPainel.add(lblBairro, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 4;
         enderecoPainel.add(fieldBairro, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 5;
         enderecoPainel.add(lblCidade, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 5;
         enderecoPainel.add(fieldCidade, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 0;
         constraints.gridy = 6;
         enderecoPainel.add(lblEstado, constraints);
 
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
+        constraints.gridy = 6;
         enderecoPainel.add(fieldEstado, constraints);
 
         //Final part
@@ -188,10 +288,18 @@ public class WindowCrud extends JFrame
         mainPainel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Manutenção de Dados"));
 
-        add(mainPainel);
+        getContentPane().add(mainPainel);
 
         pack();
         setLocationRelativeTo(null);
         this.setVisible(true);
+        
+        btnAdicionar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
     }
+    
+    
 }
+
