@@ -1,24 +1,26 @@
 package WindowCrud;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  *Classe que constitui a janela para um programa CRUD.
- * Nesta classe cria-se a tela e seus componentes que serÃ£o usados na
- * implementaÃ§Ã£o de uma aplicaÃ§Ã£o CRUD que utiliza de  uma <a href="https://postmon.com.br/">API externa</a>
- * para pegar endereÃ§os completos atravÃ©s do CEP dado.
+ * Nesta classe cria-se a tela e seus componentes que serão usados na
+ * implementação de uma aplicação CRUD que utiliza de  uma <a href="https://postmon.com.br/">API externa</a>
+ * para pegar endereços completos através do CEP dado.
  * @see javax.swing
  * @see java.awt
  * @author Matheus Seiji Noda
  * */
-public class WindowCrud extends JFrame{
-    private JLabel lblId = new JLabel("CÃ³digo: ");
+public class WindowCrud extends JFrame
+{
+    private JLabel lblId = new JLabel("Código: ");
     private JLabel lblNome = new JLabel("Nome: ");
     private JLabel lblEmail = new JLabel("Email: ");
     private JLabel lblTelefone = new JLabel("Telefone: ");
 
     private JLabel lblCEP = new JLabel("CEP: ");
-    private JLabel lblNumeroImovel = new JLabel("NÃºmero imÃ³vel: ");
+    private JLabel lblNumeroImovel = new JLabel("Número imóvel: ");
     private JLabel lblComplemento = new JLabel("Complemento: ");
     private JLabel lblRua = new JLabel("Rua: ");
     private JLabel lblBairro = new JLabel("Bairro: ");
@@ -50,8 +52,9 @@ public class WindowCrud extends JFrame{
      * todos os outros elementos de dentro do painel.
      * @author Matheus Seiji Noda
      * */
-    public WindowCrud(){
-        super("Consulta de EndereÃ§o");
+    public WindowCrud()
+    {
+        super("Consulta de Endereço");
 
         JPanel mainPainel = new JPanel(new GridBagLayout());
         JPanel btnPainel = new JPanel(new GridBagLayout());
@@ -179,35 +182,16 @@ public class WindowCrud extends JFrame{
         mainPainel.add(clientePainel);
 
         enderecoPainel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "EndereÃ§o"));
+                BorderFactory.createEtchedBorder(), "Endereço"));
         mainPainel.add(enderecoPainel);
 
         mainPainel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "ManutenÃ§Ã£o de Dados"));
+                BorderFactory.createEtchedBorder(), "Manutenção de Dados"));
 
         add(mainPainel);
 
         pack();
         setLocationRelativeTo(null);
-    }
-
-    /**
-     * MÃ©todo main para carregar a janela.
-     * Carrega a janela criada em {@link WindowCrud()} no mÃ©todo run().
-     * @author Matheus Seiji Luna Noda
-     * */
-    public static void main(String[] args){
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new WindowCrud().setVisible(true);
-            }
-        });
+        this.setVisible(true);
     }
 }
