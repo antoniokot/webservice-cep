@@ -3,5 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/roger/Documents/GitHub/WebService_ArqServ/src/sqljdbc42.jar"/>
+	<classpathentry kind="lib" path="C:/Users/roger/Documents/GitHub/WebService_ArqServ/src/webservice/jackson-all-1.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,9 +1,21 @@
 package WindowCrud;
 
 import javax.swing.*;
+
+import bd.daos.Clientes;
+import bd.dbos.Cliente;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import java.sql.*;
+
+import webservice.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  *Classe que constitui a janela para um programa CRUD.
@@ -12,7 +24,7 @@ import java.awt.event.ActionEvent;
  * para pegar endereços completos através do CEP dado.
  * @see javax.swing
  * @see java.awt
- * @author Matheus Seiji Noda
+ * @author Matheus Seiji Noda and Antônio Hideto Borges Kotsubo
  * */
 public class WindowCrud extends JFrame
 {
@@ -80,6 +92,7 @@ public class WindowCrud extends JFrame
 
         constraints.gridx = 0;
         constraints.gridy = 0;
+        
         btnBuscar.setBounds(45,50,80,20);
         btnPainel.add(btnBuscar, constraints);
         
@@ -87,6 +100,7 @@ public class WindowCrud extends JFrame
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 1;
+        
         btnCancelar.setBounds(150,50,80,20);
         btnPainel.add(btnCancelar, constraints);
 
@@ -104,6 +118,7 @@ public class WindowCrud extends JFrame
         constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 1;
         constraints.gridy = 20;
+        
         btnDeletar.setBounds(100, 170, 75, 20);
         btnPainel.add(btnDeletar, constraints);
 
@@ -188,6 +203,8 @@ public class WindowCrud extends JFrame
         constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
         constraints.gridy = 0;
+        
+        
         enderecoPainel.add(fieldCEP, constraints);
 
         constraints = new GridBagConstraints();
@@ -294,12 +311,137 @@ public class WindowCrud extends JFrame
         setLocationRelativeTo(null);
         this.setVisible(true);
         
-        btnAdicionar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+        btnBuscar.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		try
+        		{
+        			Cliente clienteRetornado = Clientes.getCliente(Integer.parseInt(fieldId.getText()));
+        			
+        			fieldNome.setText(clienteRetornado.getNome());
+        			fieldTelefone.setText(clienteRetornado.getTelefone());
+        			fieldEmail.setText(clienteRetornado.getEmail());
+        			fieldCEP.setText(clienteRetornado.getCep());
+        			fieldComplemento.setText(clienteRetornado.getComplemento());
+        			fieldNumeroImovel.setText(new Integer(clienteRetornado.getNumeroImovel()).toString());
+        			
+        			fieldId.setEnabled(false);
+            		
+            		Logradouro logradouro = getLogradouro(fieldCEP.getText());
+            		
+            		fieldRua.setText(logradouro.getLogradouro());
+    				fieldBairro.setText(logradouro.getBairro());
+    				fieldCidade.setText(logradouro.getCidade());
+    				fieldEstado.setText(logradouro.getEstado()); 
+    				
+    				btnAdicionar.setEnabled(false);
+        		}
+        		catch(Exception erro)
+        		{
+        			JOptionPane.showMessageDialog(null,"Cliente não pode ser resgatado.","Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        	}
+        });
+        
+        btnCancelar.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent arg0)
+        	{
+        		fieldId.setEnabled(true);
+        		
+        		fieldId.setText("");
+        		fieldNome.setText("");
+        		fieldTelefone.setText("");
+        		fieldEmail.setText("");
+        		fieldCEP.setText("");
+        		fieldComplemento.setText("");
+        		fieldNumeroImovel.setText("");
+        		fieldRua.setText("");
+        		fieldBairro.setText("");
+        		fieldCidade.setText("");
+        		fieldEstado.setText("");
+        		
+        		btnAdicionar.setEnabled(true);
+        	}
+        });
+        
+        btnAdicionar.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		if(fieldNome.getText() == "" )//|| fieldTelefone.getText() == "" || fieldEmail.getText() == "" ||
+        				//fieldCEP.getText() == "" || fieldComplemento.getText() == "" || fieldNumeroImovel.getText() == "")
+        		{
+        			System.out.println("APERTO");
+        			JOptionPane.showMessageDialog(null,"Um ou mais campos enconrtam-se vazios.","Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        		System.out.println("S");
+        	}
+        });
+        
+        fieldCEP.addKeyListener(new KeyAdapter() 
+        {
+        	@Override
+        	public void keyTyped(KeyEvent arg0)
+        	{
+        		try
+        		{
+        			if(fieldCEP.getText().length() == 9)
+        			{
+        				Logradouro logradouro = getLogradouro(fieldCEP.getText());
+        			
+        				fieldRua.setText(logradouro.getLogradouro());
+        				fieldBairro.setText(logradouro.getBairro());
+        				fieldCidade.setText(logradouro.getCidade());
+        				fieldEstado.setText(logradouro.getEstado());        				
+        				
+        			}
+        		}
+        		catch(Exception erro)
+        		{
+        			JOptionPane.showMessageDialog(null,erro.getMessage(),"Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        	}
+        });
+        
+        btnDeletar.addActionListener(new ActionListener() 
+        {
+        	public void actionPerformed(ActionEvent e) 
+        	{
+        		try
+        		{
+        			Clientes.excluir(Integer.parseInt(fieldId.getText()));
+        			
+        			fieldId.setEnabled(true);
+        			
+        			fieldId.setText("");
+        			fieldNome.setText("");
+            		fieldTelefone.setText("");
+            		fieldEmail.setText("");
+            		fieldCEP.setText("");
+            		fieldComplemento.setText("");
+            		fieldNumeroImovel.setText("");
+            		fieldRua.setText("");
+            		fieldBairro.setText("");
+            		fieldCidade.setText("");
+            		fieldEstado.setText("");
+        		}
+        		catch(Exception erro)
+        		{
+        			JOptionPane.showMessageDialog(null,erro.getMessage(),"Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
+        		}
         	}
         });
     }
     
+    protected Logradouro getLogradouro(String cep)
+    {
+    	cep = fieldCEP.getText().replaceAll("-", "");
+    	Logradouro logradouro = (Logradouro)ClienteWS.getObjeto(Logradouro.class, "http://api.postmon.com.br/v1/cep", cep);
+    	
+    	return logradouro;
+    }
     
 }
 
