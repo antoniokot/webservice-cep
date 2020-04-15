@@ -115,36 +115,36 @@ public class Clientes
     public static void alterar (Cliente cliente, int codigo) throws Exception
     {
         if (cliente==null)
-            throw new Exception ("Cliente nao fornecido");
+            throw new Exception ("Cliente não fornecido");
 
         if (!cadastrado (codigo))
-            throw new Exception ("Nao cadastrado");
+            throw new Exception ("Cliente não está cadastrado");
 
         try
         {
-            String sql;
+            String sql = "";
 
             sql = "UPDATE Cliente_ArqServ " +
                     "SET NOME = ? " +
                     "SET TELEFONE = ? " +
-                    "SET EMAIL = ?" +
-                    "SET CEP = ?" +
-                    "SET NUMEROIMOVEL = ?" +
-                    "SET COMPLEMENTO = ?" +
-                    "WHERE CODIGO = ?";
-
+                    "SET EMAIL = ? " +
+                    "SET CEP = ? " +
+                    "SET NUMEROIMOVEL = ? " +
+                    "SET COMPLEMENTO = ? " +
+                    "WHERE codCliente = ?";
+            
             BDSQLServer.COMANDO.prepareStatement (sql);
-
-            BDSQLServer.COMANDO.setString (1, cliente.getNome ());
-            BDSQLServer.COMANDO.setString  (2, cliente.getTelefone ());
-            BDSQLServer.COMANDO.setString    (3, cliente.getEmail ());
-            BDSQLServer.COMANDO.setString    (4, cliente.getCep ());
-            BDSQLServer.COMANDO.setInt    (5, cliente.getNumeroImovel ());
-            BDSQLServer.COMANDO.setString    (6, cliente.getComplemento ());
-            BDSQLServer.COMANDO.setInt    (7, codigo );
-
-            BDSQLServer.COMANDO.executeUpdate ();
-            BDSQLServer.COMANDO.commit        ();
+            
+            BDSQLServer.COMANDO.setString(1, cliente.getNome());
+            BDSQLServer.COMANDO.setString(2, cliente.getTelefone());
+            BDSQLServer.COMANDO.setString(3, cliente.getEmail());
+            BDSQLServer.COMANDO.setString(4, cliente.getCep());
+            BDSQLServer.COMANDO.setInt(5, cliente.getNumeroImovel());
+            BDSQLServer.COMANDO.setString(6, cliente.getComplemento());
+            BDSQLServer.COMANDO.setInt(7, codigo);	
+            
+            BDSQLServer.COMANDO.executeUpdate();
+            BDSQLServer.COMANDO.commit();
         }
         catch (SQLException erro)
         {
@@ -164,11 +164,11 @@ public class Clientes
             BDSQLServer.COMANDO.prepareStatement(sql);
 
             BDSQLServer.COMANDO.setInt(1,codCliente);
-
+            
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("Nao cadastrado");
+                throw new Exception ("Cliete não cadastrado");
 
             cliente = new Cliente(resultado.getString("nome"),
                                     resultado.getString("telefone"),

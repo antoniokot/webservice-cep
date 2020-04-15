@@ -1,6 +1,7 @@
 package WindowCrud;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 
 import bd.daos.Clientes;
 import bd.dbos.Cliente;
@@ -9,13 +10,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import java.sql.*;
+
+import java.text.ParseException;
 
 import webservice.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 
 /**
  *Classe que constitui a janela para um programa CRUD.
@@ -44,9 +45,9 @@ public class WindowCrud extends JFrame
     private JTextField fieldId = new JTextField(4);
     private JTextField fieldNome = new JTextField(20);
     private JTextField fieldEmail = new JTextField(20);
-    private JTextField fieldTelefone = new JTextField(20);
+    private JFormattedTextField fieldTelefone = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
 
-    private JTextField fieldCEP = new JTextField(20);
+    private JFormattedTextField fieldCEP = new JFormattedTextField(new MaskFormatter("#####-###"));
     private JTextField fieldNumeroImovel = new JTextField(20);
     private JTextField fieldComplemento = new JTextField(20);
     private JTextField fieldRua = new JTextField(20);
@@ -65,9 +66,10 @@ public class WindowCrud extends JFrame
      * Neste construtor serão adicionados e posicionados ao painel principal
      * todos os outros elementos de dentro do painel.
      * @author Matheus Seiji Noda and Antônio Hideto Borges Kotsubo
+     * @throws ParseException 
      * @since 2020
      * */
-    public WindowCrud()
+    public WindowCrud() throws ParseException
     {
         super("Consulta de Endereço");
         
@@ -127,6 +129,7 @@ public class WindowCrud extends JFrame
         constraints.insets = new Insets(0,0,0,0);
         constraints.gridx = 2;
         constraints.gridy = 20;
+        
         btnAlterar.setBounds(190, 170, 75, 20);
         btnPainel.add(btnAlterar, constraints);
 
@@ -160,6 +163,7 @@ public class WindowCrud extends JFrame
         constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
         constraints.gridy = 1;
+        
         clientePainel.add(fieldNome, constraints);
 
         constraints = new GridBagConstraints();
@@ -168,6 +172,8 @@ public class WindowCrud extends JFrame
         constraints.gridx = 0;
         constraints.gridy = 2;
         clientePainel.add(lblTelefone,constraints);
+        
+        fieldTelefone.setColumns(11);
 
         constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
@@ -203,6 +209,7 @@ public class WindowCrud extends JFrame
         constraints.insets = new Insets(5,10,5,10);
         constraints.gridx = 1;
         constraints.gridy = 0;
+        fieldCEP.setColumns(7);
         
         
         enderecoPainel.add(fieldCEP, constraints);
@@ -311,6 +318,11 @@ public class WindowCrud extends JFrame
         setLocationRelativeTo(null);
         this.setVisible(true);
         
+        limparFields();
+        
+        btnCancelar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        
         btnBuscar.addActionListener(new ActionListener()
         {
         	public void actionPerformed(ActionEvent e)
@@ -327,6 +339,7 @@ public class WindowCrud extends JFrame
         			fieldNumeroImovel.setText(new Integer(clienteRetornado.getNumeroImovel()).toString());
         			
         			fieldId.setEnabled(false);
+        			btnBuscar.setEnabled(false);
             		
             		Logradouro logradouro = getLogradouro(fieldCEP.getText());
             		
@@ -336,10 +349,18 @@ public class WindowCrud extends JFrame
     				fieldEstado.setText(logradouro.getEstado()); 
     				
     				btnAdicionar.setEnabled(false);
+    				btnCancelar.setEnabled(true);
+    				btnAlterar.setEnabled(true);
         		}
         		catch(Exception erro)
         		{
-        			JOptionPane.showMessageDialog(null,"Cliente não pode ser resgatado.","Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			if(fieldId.getText().equals(""))
+        				JOptionPane.showMessageDialog(null, "Código não foi fornecido","Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			
+        			else
+        				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			
+        			limparFields();
         		}
         	}
         });
@@ -350,33 +371,108 @@ public class WindowCrud extends JFrame
         	{
         		fieldId.setEnabled(true);
         		
-        		fieldId.setText("");
-        		fieldNome.setText("");
-        		fieldTelefone.setText("");
-        		fieldEmail.setText("");
-        		fieldCEP.setText("");
-        		fieldComplemento.setText("");
-        		fieldNumeroImovel.setText("");
-        		fieldRua.setText("");
-        		fieldBairro.setText("");
-        		fieldCidade.setText("");
-        		fieldEstado.setText("");
+        		limparFields();
         		
         		btnAdicionar.setEnabled(true);
+        		btnCancelar.setEnabled(false);
+        		btnAlterar.setEnabled(false);
+        		btnBuscar.setEnabled(true);
         	}
         });
         
         btnAdicionar.addActionListener(new ActionListener()
         {
         	public void actionPerformed(ActionEvent e)
-        	{
-        		if(fieldNome.getText() == "" )//|| fieldTelefone.getText() == "" || fieldEmail.getText() == "" ||
-        				//fieldCEP.getText() == "" || fieldComplemento.getText() == "" || fieldNumeroImovel.getText() == "")
+        	{		       		
+        		try
         		{
-        			System.out.println("APERTO");
-        			JOptionPane.showMessageDialog(null,"Um ou mais campos enconrtam-se vazios.","Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);
+        			String nome = fieldNome.getText();
+        			String telefone = fieldTelefone.getText();
+        			String email = fieldEmail.getText();
+        			String cep = fieldCEP.getText();
+        			int nImovel = Integer.parseInt(fieldNumeroImovel.getText());
+        			String comp = fieldComplemento.getText();
+        			
+        			Clientes.incluir(new Cliente(nome, telefone, email, cep, nImovel, comp));
+        			
+        			limparFields();
+        			
+        			JOptionPane.showMessageDialog(null,"Cliente incluído com sucesso!","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         		}
-        		System.out.println("S");
+        		catch(Exception erro)
+        		{
+        			if(algumVazio())
+        				JOptionPane.showMessageDialog(null, "Um ou mais campos enconrtam-se vazios.","Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);
+        		
+        			else
+        				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        	}
+        });
+        
+        
+        btnDeletar.addActionListener(new ActionListener() 
+        {
+        	public void actionPerformed(ActionEvent e) 
+        	{
+        		try
+        		{
+        			Clientes.excluir(Integer.parseInt(fieldId.getText()));
+        			
+        			fieldId.setEnabled(true);
+        			
+        			limparFields();
+        			
+        			btnAlterar.setEnabled(false);
+        			btnAdicionar.setEnabled(true);
+        			
+        			JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.","Sucesso!", JOptionPane.INFORMATION_MESSAGE);       			
+        		}
+        		catch(Exception erro)
+        		{
+        			if(fieldId.getText().equals(""))
+        				JOptionPane.showMessageDialog(null, "Código do cliente não foi fornecido.","Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			
+        			else
+        				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        	}
+        });
+        
+        btnAlterar.addActionListener(new ActionListener() 
+        {
+        	public void actionPerformed(ActionEvent arg0) 
+        	{
+        		try
+        		{
+        			int id = Integer.parseInt(fieldId.getText());
+        			String nome = fieldNome.getText();
+    				String telefone = fieldTelefone.getText();
+    				String email = fieldEmail.getText();
+    				String cep = fieldCEP.getText();
+    				int nImovel = Integer.parseInt(fieldNumeroImovel.getText());
+    				String comp = fieldComplemento.getText();
+    				
+    				Cliente novoCliente = new Cliente (nome, telefone, email, cep, nImovel, comp);
+    				
+    				Clientes.alterar(novoCliente, id);
+    				
+    				limparFields();
+    				
+    				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso.","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        		catch(Exception erro)
+        		{
+        			if(fieldId.getText().equals(""))
+        				JOptionPane.showMessageDialog(null, "Código do cliente não foi fornecido.","Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			
+        			else
+        			if(algumVazio())
+        				JOptionPane.showMessageDialog(null, "Um ou mais campos não foram fornecidos","Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			
+        			else
+        				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
+        		}
         	}
         });
         
@@ -387,7 +483,9 @@ public class WindowCrud extends JFrame
         	{
         		try
         		{
-        			if(fieldCEP.getText().length() == 9)
+        			String padrao = "\\d{5}-\\d{3}";
+        			
+        			if(fieldCEP.getText().matches(padrao))
         			{
         				Logradouro logradouro = getLogradouro(fieldCEP.getText());
         			
@@ -400,36 +498,7 @@ public class WindowCrud extends JFrame
         		}
         		catch(Exception erro)
         		{
-        			JOptionPane.showMessageDialog(null,erro.getMessage(),"Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
-        		}
-        	}
-        });
-        
-        btnDeletar.addActionListener(new ActionListener() 
-        {
-        	public void actionPerformed(ActionEvent e) 
-        	{
-        		try
-        		{
-        			Clientes.excluir(Integer.parseInt(fieldId.getText()));
-        			
-        			fieldId.setEnabled(true);
-        			
-        			fieldId.setText("");
-        			fieldNome.setText("");
-            		fieldTelefone.setText("");
-            		fieldEmail.setText("");
-            		fieldCEP.setText("");
-            		fieldComplemento.setText("");
-            		fieldNumeroImovel.setText("");
-            		fieldRua.setText("");
-            		fieldBairro.setText("");
-            		fieldCidade.setText("");
-            		fieldEstado.setText("");
-        		}
-        		catch(Exception erro)
-        		{
-        			JOptionPane.showMessageDialog(null,erro.getMessage(),"Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
+        			JOptionPane.showMessageDialog(null, "Não foi possível recuperar as informações através do CEP fornecido.","Erro ao recuperar cep", JOptionPane.INFORMATION_MESSAGE);
         		}
         	}
         });
@@ -437,11 +506,36 @@ public class WindowCrud extends JFrame
     
     protected Logradouro getLogradouro(String cep)
     {
-    	cep = fieldCEP.getText().replaceAll("-", "");
+    	cep = fieldCEP.getText().replaceAll("-", "");    		
+    	
     	Logradouro logradouro = (Logradouro)ClienteWS.getObjeto(Logradouro.class, "http://api.postmon.com.br/v1/cep", cep);
     	
     	return logradouro;
     }
     
+    protected void limparFields()
+    {
+    	fieldId.setText("");
+		fieldNome.setText("");
+		fieldTelefone.setText("");
+		fieldEmail.setText("");
+		fieldCEP.setText("");
+		fieldComplemento.setText("");
+		fieldNumeroImovel.setText("");
+		fieldRua.setText("");
+		fieldBairro.setText("");
+		fieldCidade.setText("");
+		fieldEstado.setText("");
+    }
+    
+    protected boolean algumVazio()
+    {
+    	if(fieldId.getText().equals("") || fieldNome.getText().equals("") || fieldTelefone.getText().equals("") 
+    			|| fieldEmail.getText().equals("") || fieldCEP.getText().equals("")
+    			|| fieldNumeroImovel.getText().equals("") || fieldComplemento.getText().equals(""))
+    		return true;
+    	
+    	return false;
+    }
 }
 
