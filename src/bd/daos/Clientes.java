@@ -208,6 +208,7 @@ public class Clientes
         return resultado;
     }
     
+    /*
     public static Cliente getClienteByEmail (String email) throws Exception
     {
         Cliente cliente = null;
@@ -240,6 +241,7 @@ public class Clientes
 
         return cliente;
     }
+    */
 
 }
 
