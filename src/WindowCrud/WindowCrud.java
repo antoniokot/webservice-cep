@@ -425,6 +425,8 @@ public class WindowCrud extends JFrame
         			
         			btnAlterar.setEnabled(false);
         			btnAdicionar.setEnabled(true);
+        			btnCancelar.setEnabled(false);
+        			btnBuscar.setEnabled(true);
         			
         			JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.","Sucesso!", JOptionPane.INFORMATION_MESSAGE);       			
         		}
@@ -456,8 +458,6 @@ public class WindowCrud extends JFrame
     				Cliente novoCliente = new Cliente (nome, telefone, email, cep, nImovel, comp);
     				
     				Clientes.alterar(novoCliente, id);
-    				
-    				limparFields();
     				
     				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso.","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         		}
@@ -504,7 +504,14 @@ public class WindowCrud extends JFrame
         });
     }
     
-    protected Logradouro getLogradouro(String cep)
+    /**
+     * Método que retorna um logradouro. 
+     * Este método utiliza do CEP para retornar informações sobre uma localização específica, que são retornadas por um WebService.
+     * @param cep			É o parâmetro utilizado no WebService para retornar informações de uma localização específica
+     * @return logradouro	Retorna uma instância da classe Logradouro, que contém todas as informações vindas do WebService
+     */
+    
+    protected Logradouro getLogradouro(String cep) throws Exception
     {
     	cep = fieldCEP.getText().replaceAll("-", "");    		
     	
@@ -512,6 +519,11 @@ public class WindowCrud extends JFrame
     	
     	return logradouro;
     }
+    
+    
+    /**
+     * Método responsável por limpar os TextFields     
+     */     
     
     protected void limparFields()
     {
@@ -527,6 +539,11 @@ public class WindowCrud extends JFrame
 		fieldCidade.setText("");
 		fieldEstado.setText("");
     }
+    
+    /**
+     * Método que confere se o conteúdo de algum TextField é nulo.
+     * @return	true se houver algum TextField vazio e false se não houver
+     */
     
     protected boolean algumVazio()
     {

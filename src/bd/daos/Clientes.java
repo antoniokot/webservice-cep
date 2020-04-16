@@ -62,9 +62,9 @@ public class Clientes
     public static void incluir (Cliente cliente) throws Exception
     {
         if(cliente == null)
-            throw new Exception("Cliente n√£o fornecido");
+            throw new Exception("Cliente n„o fornecido");
         if(emailCadastrado(cliente.getEmail()))
-            throw new Exception("Email j√° usado");
+            throw new Exception("Email j· em uso");
         try
         {
             String sql = "";
@@ -126,11 +126,11 @@ public class Clientes
 
             sql = "UPDATE Cliente_ArqServ " +
                     "SET NOME = ? " +
-                    "SET TELEFONE = ? " +
-                    "SET EMAIL = ? " +
-                    "SET CEP = ? " +
-                    "SET NUMEROIMOVEL = ? " +
-                    "SET COMPLEMENTO = ? " +
+                    ", TELEFONE = ? " +
+                    ", EMAIL = ? " +
+                    ", CEP = ? " +
+                    ", NUMEROIMOVEL = ? " +
+                    ", COMPLEMENTO = ? " +
                     "WHERE codCliente = ?";
             
             BDSQLServer.COMANDO.prepareStatement (sql);
@@ -206,6 +206,39 @@ public class Clientes
         }
 
         return resultado;
+    }
+    
+    public static Cliente getClienteByEmail (String email) throws Exception
+    {
+        Cliente cliente = null;
+        try
+        {
+            String sql = "";
+
+            sql = "SELECT * FROM Cliente_ArqServ WHERE email = ?";
+
+            BDSQLServer.COMANDO.prepareStatement(sql);
+
+            BDSQLServer.COMANDO.setString(1, email);
+            
+            MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+
+            if (!resultado.first())
+                throw new Exception ("Email n„o cadastrado");
+
+            cliente = new Cliente(resultado.getString("nome"),
+                                    resultado.getString("telefone"),
+                                    resultado.getString("email"),
+                                    resultado.getString("cep"),
+                                    resultado.getInt("numeroImovel"),
+                                    resultado.getString("complemento"));
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao recuperar cliente");
+        }
+
+        return cliente;
     }
 
 }
