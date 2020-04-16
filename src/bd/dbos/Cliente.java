@@ -3,6 +3,11 @@ package bd.dbos;
 import bd.core.*;
 import bd.daos.*;
 
+/**
+ * A classe Cliente é uma classe que armazena valores de uma tabela.
+ * Instâncias desta classe, permitem o armazenamento de um dado da tabela Cliente_ArqServ do banco de dados.
+ * @author Antônio Kotsubo(19162), Marcelo Sícoli(19185), Matheus Seiji(19190)
+ */
 public class Cliente implements Cloneable
 {
     //protected int codigo;
@@ -13,6 +18,16 @@ public class Cliente implements Cloneable
     protected int numeroImovel;
     protected String complemento;
 
+    /**
+     * Consturtor da classe cliente que pede como parâmetro todos os elementos da tabela Cliente_ArqServ exceto o código
+     * @param nome
+     * @param tel
+     * @param email
+     * @param cep
+     * @param nImovel
+     * @param comp
+     * @throws Exception
+     */
     public Cliente (String nome, String tel, String email, String cep, int nImovel, String comp) throws Exception
     {
         //setCodigo(cod);
@@ -32,6 +47,11 @@ public class Cliente implements Cloneable
         this.codigo = cod;
     }*/
 
+    /**
+     * Muda o valor do atributo nome
+     * @param nome o nome do cliente
+     * @throws Exception
+     */
     public void setNome(String nome) throws Exception
     {
         if(nome == " ")
@@ -40,6 +60,11 @@ public class Cliente implements Cloneable
         this.nome = nome;
     }
 
+    /**
+     * Muda o valor do atributo telefone
+     * @param tel o telefone do cliente
+     * @throws Exception
+     */
     public void setTelefone(String tel) throws Exception
     {
         if(tel == " " || tel.length() < 15 || tel.length() > 15)
@@ -48,6 +73,11 @@ public class Cliente implements Cloneable
         this.telefone = tel;
     }
 
+    /**
+     * Muda o valor do atributo email
+     * @param email o email do cliente
+     * @throws Exception
+     */
     public void setEmail(String email) throws Exception
     {
         if(email == "")
@@ -56,6 +86,11 @@ public class Cliente implements Cloneable
         this.email = email;
     }
 
+    /**
+     * Muda o valor do atributo cep
+     * @param cep o cep do cliente
+     * @throws Exception
+     */
     public void setCep(String cep) throws Exception
     {
         if(cep == " " || cep.length() < 9 || cep.length() > 9)
@@ -64,6 +99,11 @@ public class Cliente implements Cloneable
         this.cep = cep;
     }
 
+    /**
+     * Muda o valor do atributo numero do imovel
+     * @param nImovel o numero do imovel do cliente
+     * @throws Exception
+     */
     public void setNumeroImovel(int nImovel) throws Exception
     {
         if(nImovel <= 0)
@@ -72,6 +112,11 @@ public class Cliente implements Cloneable
         this.numeroImovel = nImovel;
     }
 
+    /**
+     * Muda o valor do atributo complemento do endereço
+     * @param comp o complemento do endereço do cliente
+     * @throws Exception
+     */
     public void setComplemento(String comp) throws Exception
     {
         if(comp == " ")
@@ -85,36 +130,64 @@ public class Cliente implements Cloneable
         return this.codigo;
     }*/
 
+    /**
+     * Retorna o nome do cliente
+     * @return o nome do cliente
+     */
     public String getNome()
     {
         return this.nome;
     }
 
+    /**
+     * Retorna o telefone do cliente
+     * @return o telefone do cliente
+     */
     public String getTelefone()
     {
         return this.telefone;
     }
 
+    /**
+     * Retorna o email do cliente
+     * @return o email do cliente
+     */
     public String getEmail()
     {
         return this.email;
     }
 
+    /**
+     * Retorna o cep do cliente
+     * @return o cep do cliente
+     */
     public String getCep()
     {
         return this.cep;
     }
 
+    /**
+     * Retorna o numero do imovel do cliente
+     * @return o numero do imovel do cliente
+     */
     public int getNumeroImovel()
     {
         return this.numeroImovel;
     }
 
+    /**
+     * Retorna o complemento do endereço do cliente
+     * @return o complemento do endereço do cliente
+     */
     public String getComplemento()
     {
         return this.complemento;
     }
 
+    /**
+     * Transforma todo o conteudo da classe cliente em uma string e a retorna
+     * @return uma string com todos os valores do cliente
+     */
     public String toString()
     {
         String ret = "";
@@ -130,6 +203,11 @@ public class Cliente implements Cloneable
         return ret;
     }
 
+    /**
+     * Compara dois clientes e retorna um boolean com o resultado da comparação
+     * @param obj o cliente a ser comparado
+     * @return um boolean com o resultad da comparação
+     */
     public boolean equals(Object obj)
     {
         if(obj == null)
@@ -150,6 +228,10 @@ public class Cliente implements Cloneable
         return true;
     }
 
+    /**
+     * Gera o código de hash da classe cliente
+     * @return o código de hash
+     */
     public int hashCode()
     {
         int ret = 666;
@@ -165,6 +247,10 @@ public class Cliente implements Cloneable
         return ret;
     }
 
+    /**
+     * Clona a classe cliente
+     * @return um cliente identico ao desta instancia
+     */
     public Object clone()
     {
         Cliente ret = null;
@@ -181,6 +267,11 @@ public class Cliente implements Cloneable
         return ret;
     }
 
+    /**
+     * Construtor da classe cliente a partir de outra instancia desta classe
+     * @param modelo a instancia desta classe
+     * @throws Exception
+     */
     public Cliente(Cliente modelo) throws Exception
     {
         if(modelo == null)
