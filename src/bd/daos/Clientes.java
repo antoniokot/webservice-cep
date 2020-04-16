@@ -5,8 +5,21 @@ import bd.*;
 import bd.core.*;
 import bd.dbos.*;
 
+/**
+ * A classe Clientes é uma classe singleton que realiza operações no banco de dados
+ * Instâncias desta classe, singleton, permitem a relização de operações no banco de dados relacionadas com a tabela Cliente_ArqServ, como obter valores da tabela, inserir valores, excluir valores e alterar valres
+ * Nela encontramos, por exemplo, métodos para incluir, selecionar, excluir e alterar valores da tabela
+ * @author Antônio Kotsubo(19162), Marcelo Sícoli(19185), Matheus Seiji(19190)
+ * */
+
 public class Clientes
 {
+    /**
+     *Este metodo verifica se um usuario está ou não cadastrado retornando um boolean com a resposta
+     * @param codigo o código do cliente
+     * @return boolean sendo true se estiver cadastrado e false se não
+     * @throws Exception
+     */
     public static boolean cadastrado (int codigo) throws Exception
     {
         boolean retorno = false;
@@ -32,7 +45,12 @@ public class Clientes
 
         return retorno;
     }
-
+    /**
+     *Este metodo verifica se um email já foi cadastrado retornando um boolean com a resposta
+     * @param email o email do cliente
+     * @return boolean sendo true se o email estiver cadastrado e false se não
+     * @throws Exception
+     */
     public static boolean emailCadastrado(String email) throws Exception
     {
         boolean retorno = false;
@@ -59,12 +77,17 @@ public class Clientes
         return retorno;
     }
 
+    /**
+     * Insere um cliente na tabela Cliente_ArqServ
+     * @param cliente o cliente a incluir
+     * @throws Exception
+     */
     public static void incluir (Cliente cliente) throws Exception
     {
         if(cliente == null)
-            throw new Exception("Cliente n�o fornecido");
+            throw new Exception("Cliente não fornecido");
         if(emailCadastrado(cliente.getEmail()))
-            throw new Exception("Email j� em uso");
+            throw new Exception("Email já em uso");
         try
         {
             String sql = "";
@@ -90,6 +113,11 @@ public class Clientes
 
     }
 
+    /**
+     * Exclui um cliente da tabela Cliente_ArqServ
+     * @param codCliente o código do cliente a ser excluído
+     * @throws Exception
+     */
     public static void excluir (int codCliente) throws Exception
     {
         try
@@ -112,13 +140,19 @@ public class Clientes
 
     }
 
+    /**
+     * Altera os dados de um determinado cliente da tabela Cliente_ArqServ
+     * @param cliente os novos dados do cliente
+     * @param codigo o codigo do cliente que vai ser alterado
+     * @throws Exception
+     */
     public static void alterar (Cliente cliente, int codigo) throws Exception
     {
         if (cliente==null)
-            throw new Exception ("Cliente n�o fornecido");
+            throw new Exception ("Cliente não fornecido");
 
         if (!cadastrado (codigo))
-            throw new Exception ("Cliente n�o est� cadastrado");
+            throw new Exception ("Cliente não está cadastrado");
 
         try
         {
@@ -152,6 +186,12 @@ public class Clientes
         }
     }
 
+    /**
+     * Recupera os dados de um determinado cliente da tabela Cliente_ArqServ
+     * @param codCliente o código do cliente a ser pesquisado
+     * @return os dados do cliente pesquisado
+     * @throws Exception
+     */
     public static Cliente getCliente (int codCliente) throws Exception
     {
         Cliente cliente = null;
@@ -168,7 +208,7 @@ public class Clientes
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("Cliente n�o cadastrado");
+                throw new Exception ("Cliente não cadastrado");
 
             cliente = new Cliente(resultado.getString("nome"),
                                     resultado.getString("telefone"),
@@ -185,6 +225,11 @@ public class Clientes
         return cliente;
     }
 
+    /**
+     * Recupera todos os clientes da tabela Cliente_ArqServ
+     * @return os clientes da tabela na forma de MeuResultset
+     * @throws Exception
+     */
     public static MeuResultSet getClientes () throws Exception
     {
         MeuResultSet resultado = null;
@@ -225,7 +270,7 @@ public class Clientes
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("Email n�o cadastrado");
+                throw new Exception ("Email n�o cadastrado");
 
             cliente = new Cliente(resultado.getString("nome"),
                                     resultado.getString("telefone"),
