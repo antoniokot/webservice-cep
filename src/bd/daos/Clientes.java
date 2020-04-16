@@ -7,7 +7,7 @@ import bd.dbos.*;
 
 /**
  * A classe Clientes é uma classe singleton que realiza operações no banco de dados
- * Instâncias desta classe, singleton, permitem a relização de operações no banco de dados relacionadas com a tabela Cliente_ArqServ, como obter valores da tabela, inserir valores, excluir valores e alterar valres
+ * Esta classe, singleton, permitem a relização de operações no banco de dados relacionadas com a tabela Cliente_ArqServ, como obter valores da tabela, inserir valores, excluir valores e alterar valres
  * Nela encontramos, por exemplo, métodos para incluir, selecionar, excluir e alterar valores da tabela
  * @author Antônio Kotsubo(19162), Marcelo Sícoli(19185), Matheus Seiji(19190)
  * */
