@@ -20,22 +20,22 @@ import java.awt.event.KeyEvent;
 
 /**
  *Classe que constitui a janela para um programa CRUD.
- * Nesta classe cria-se a tela e seus componentes que ser„o usados na
- * implementaÁ„o de uma aplicaÁ„o CRUD que utiliza de  uma <a href="https://postmon.com.br/">API externa</a>
- * para pegar endereÁos completos atravÈs do CEP dado.
+ * Nesta classe cria-se a tela e seus componentes que ser√£o usados na
+ * implementa√ß√£o de uma aplica√ß√£o CRUD que utiliza de  uma <a href="https://postmon.com.br/">API externa</a>
+ * para pegar endere√ßos completos atrav√©s do CEP dado.
  * @see javax.swing
  * @see java.awt
- * @author Matheus Seiji Noda and AntÙnio Hideto Borges Kotsubo
+ * @author Matheus Seiji Noda, Marcelo S√≠coli and Ant√¥nio Hideto Borges Kotsubo
  * */
 public class WindowCrud extends JFrame
 {
-    private JLabel lblId = new JLabel("CÛdigo: ");
+    private JLabel lblId = new JLabel("C√≥digo: ");
     private JLabel lblNome = new JLabel("Nome: ");
     private JLabel lblEmail = new JLabel("Email: ");
     private JLabel lblTelefone = new JLabel("Telefone: ");
 
     private JLabel lblCEP = new JLabel("CEP: ");
-    private JLabel lblNumeroImovel = new JLabel("N˙mero imÛvel: ");
+    private JLabel lblNumeroImovel = new JLabel("N√∫mero im√≥vel: ");
     private JLabel lblComplemento = new JLabel("Complemento: ");
     private JLabel lblRua = new JLabel("Rua: ");
     private JLabel lblBairro = new JLabel("Bairro: ");
@@ -63,15 +63,15 @@ public class WindowCrud extends JFrame
 
     /**
      * Construtor da classe WindowCrud.
-     * Neste construtor ser„o adicionados e posicionados ao painel principal
+     * Neste construtor ser√£o adicionados e posicionados ao painel principal
      * todos os outros elementos de dentro do painel.
-     * @author Matheus Seiji Noda and AntÙnio Hideto Borges Kotsubo
+     * @author Matheus Seiji Noda and Ant√¥nio Hideto Borges Kotsubo
      * @throws ParseException 
      * @since 2020
      * */
     public WindowCrud() throws ParseException
     {
-        super("Consulta de EndereÁo");
+        super("Consulta de Endere√ßo");
         
         fieldRua.setEnabled(false);
         fieldBairro.setEnabled(false);
@@ -196,7 +196,7 @@ public class WindowCrud extends JFrame
         constraints.gridy = 3;
         clientePainel.add(fieldEmail, constraints);
 
-        //Endere√ßo
+        //Endere√É¬ßo
         constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(5,10,5,10);
@@ -306,11 +306,11 @@ public class WindowCrud extends JFrame
         mainPainel.add(clientePainel);
 
         enderecoPainel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "EndereÁo"));
+                BorderFactory.createEtchedBorder(), "Endere√ßo"));
         mainPainel.add(enderecoPainel);
 
         mainPainel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "ManutenÁ„o de Dados"));
+                BorderFactory.createEtchedBorder(), "Manuten√ß√£o de Dados"));
 
         getContentPane().add(mainPainel);
 
@@ -355,7 +355,7 @@ public class WindowCrud extends JFrame
         		catch(Exception erro)
         		{
         			if(fieldId.getText().equals(""))
-        				JOptionPane.showMessageDialog(null, "CÛdigo n„o foi fornecido","Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(null, "C√≥digo n√£o foi fornecido","Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
         			
         			else
         				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao recuperar cliente", JOptionPane.INFORMATION_MESSAGE);
@@ -397,7 +397,7 @@ public class WindowCrud extends JFrame
         			
         			limparFields();
         			
-        			JOptionPane.showMessageDialog(null,"Cliente incluÌdo com sucesso!","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+        			JOptionPane.showMessageDialog(null,"Cliente inclu√≠do com sucesso!","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         		}
         		catch(Exception erro)
         		{
@@ -433,7 +433,7 @@ public class WindowCrud extends JFrame
         		catch(Exception erro)
         		{
         			if(fieldId.getText().equals(""))
-        				JOptionPane.showMessageDialog(null, "CÛdigo do cliente n„o foi fornecido.","Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(null, "C√≥digo do cliente n√£o foi fornecido.","Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
         			
         			else
         				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao deletar cliente", JOptionPane.INFORMATION_MESSAGE);
@@ -464,11 +464,11 @@ public class WindowCrud extends JFrame
         		catch(Exception erro)
         		{
         			if(fieldId.getText().equals(""))
-        				JOptionPane.showMessageDialog(null, "CÛdigo do cliente n„o foi fornecido.","Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(null, "C√≥digo do cliente n√£o foi fornecido.","Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
         			
         			else
         			if(algumVazio())
-        				JOptionPane.showMessageDialog(null, "Um ou mais campos n„o foram fornecidos","Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(null, "Um ou mais campos n√£o foram fornecidos","Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
         			
         			else
         				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao alterar cliente", JOptionPane.INFORMATION_MESSAGE);
@@ -498,17 +498,17 @@ public class WindowCrud extends JFrame
         		}
         		catch(Exception erro)
         		{
-        			JOptionPane.showMessageDialog(null, "N„o foi possÌvel recuperar as informaÁıes atravÈs do CEP fornecido.","Erro ao recuperar cep", JOptionPane.INFORMATION_MESSAGE);
+        			JOptionPane.showMessageDialog(null, "N√£o foi poss√≠vel recuperar as informa√ß√µes atrav√©s do CEP fornecido.","Erro ao recuperar cep", JOptionPane.INFORMATION_MESSAGE);
         		}
         	}
         });
     }
     
     /**
-     * MÈtodo que retorna um logradouro. 
-     * Este mÈtodo utiliza do CEP para retornar informaÁıes sobre uma localizaÁ„o especÌfica, que s„o retornadas por um WebService.
-     * @param cep			… o par‚metro utilizado no WebService para retornar informaÁıes de uma localizaÁ„o especÌfica
-     * @return logradouro	Retorna uma inst‚ncia da classe Logradouro, que contÈm todas as informaÁıes vindas do WebService
+     * M√©todo que retorna um logradouro. 
+     * Este m√©todo utiliza do CEP para retornar informa√ß√µes sobre uma localiza√ß√£o espec√≠fica, que s√£o retornadas por um WebService.
+     * @param cep			√â o par√¢metro utilizado no WebService para retornar informa√ß√µes de uma localiza√ß√£o espec√≠fica
+     * @return logradouro	Retorna uma inst√¢ncia da classe Logradouro, que cont√©m todas as informa√ß√µes vindas do WebService
      */
     
     protected Logradouro getLogradouro(String cep) throws Exception
@@ -522,7 +522,7 @@ public class WindowCrud extends JFrame
     
     
     /**
-     * MÈtodo respons·vel por limpar os TextFields     
+     * M√©todo respons√°vel por limpar os TextFields     
      */     
     
     protected void limparFields()
@@ -541,8 +541,8 @@ public class WindowCrud extends JFrame
     }
     
     /**
-     * MÈtodo que confere se o conte˙do de algum TextField È nulo.
-     * @return	true se houver algum TextField vazio e false se n„o houver
+     * M√©todo que confere se o conte√∫do de algum TextField √© nulo.
+     * @return	true se houver algum TextField vazio e false se n√£o houver
      */
     
     protected boolean algumVazio()
