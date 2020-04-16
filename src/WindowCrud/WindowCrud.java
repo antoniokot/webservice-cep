@@ -65,7 +65,7 @@ public class WindowCrud extends JFrame
      * Construtor da classe WindowCrud.
      * Neste construtor serão adicionados e posicionados ao painel principal
      * todos os outros elementos de dentro do painel.
-     * @author Matheus Seiji Noda and Antônio Hideto Borges Kotsubo
+     * @author Matheus Seiji Noda, Marcelo Sícoli and Antônio Hideto Borges Kotsubo
      * @throws ParseException 
      * @since 2020
      * */
