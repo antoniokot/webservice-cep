@@ -402,7 +402,7 @@ public class WindowCrud extends JFrame
         		catch(Exception erro)
         		{
         			if(algumVazio())
-        				JOptionPane.showMessageDialog(null, "Um ou mais campos enconrtam-se vazios.","Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(null, "Um ou mais campos encontram-se vazios.","Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);
         		
         			else
         				JOptionPane.showMessageDialog(null, erro.getMessage(),"Erro ao adicionar", JOptionPane.INFORMATION_MESSAGE);

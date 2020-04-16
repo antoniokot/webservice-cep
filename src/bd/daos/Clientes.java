@@ -168,7 +168,7 @@ public class Clientes
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("Cliete não cadastrado");
+                throw new Exception ("Cliente não cadastrado");
 
             cliente = new Cliente(resultado.getString("nome"),
                                     resultado.getString("telefone"),
