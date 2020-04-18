@@ -20,12 +20,12 @@ import java.awt.event.KeyEvent;
 
 /**
  *Classe que constitui a janela para um programa CRUD.
- * Nesta classe cria-se a tela e seus componentes que serão usados na
+ * Nesta classe cria-se a tela e seus componentes que serÃ£o usados na
  * implementação de uma aplicação CRUD que utiliza de  uma <a href="https://postmon.com.br/">API externa</a>
- * para pegar endereços completos através do CEP dado.
+ * para pegar endereços completos atravÃ©s do CEP dado.
  * @see javax.swing
  * @see java.awt
- * @author Matheus Seiji Noda, Marcelo Sícoli and Antônio Hideto Borges Kotsubo
+ * @author Matheus Seiji Noda, Marcelo SÃ­coli and AntÃ´nio Hideto Borges Kotsubo
  * */
 public class WindowCrud extends JFrame
 {
@@ -71,7 +71,7 @@ public class WindowCrud extends JFrame
      * */
     public WindowCrud() throws ParseException
     {
-        super("Consulta de Endereço");
+        super("Consulta de Endereços");
         
         fieldRua.setEnabled(false);
         fieldBairro.setEnabled(false);
@@ -196,7 +196,7 @@ public class WindowCrud extends JFrame
         constraints.gridy = 3;
         clientePainel.add(fieldEmail, constraints);
 
-        //EndereÃ§o
+        //Endereço
         constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(5,10,5,10);
@@ -508,7 +508,7 @@ public class WindowCrud extends JFrame
      * Método que retorna um logradouro. 
      * Este método utiliza do CEP para retornar informações sobre uma localização específica, que são retornadas por um WebService.
      * @param cep			É o parâmetro utilizado no WebService para retornar informações de uma localização específica
-     * @return logradouro	Retorna uma instância da classe Logradouro, que contém todas as informações vindas do WebService
+     * @return logradouro	Retorna uma instância da classe Logradouro, que contém todas as informaçõeses vindas do WebService
      */
     
     protected Logradouro getLogradouro(String cep) throws Exception
