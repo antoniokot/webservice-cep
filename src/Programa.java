@@ -12,8 +12,6 @@ public class Programa
 	{
 		try
 		{
-			
-			//Clientes.incluir(new Cliente("Jeferson de Moraes", "(19) 99743-5467", "jefmor@gmail.com", "43125-123", 11, "Residencial Castelo Dourado"));
 			try 
 			{
 	            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
