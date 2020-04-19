@@ -395,9 +395,9 @@ public class WindowCrud extends JFrame
         			
         			Clientes.incluir(new Cliente(nome, telefone, email, cep, nImovel, comp));
         			
-        			limparFields();
-        			
         			JOptionPane.showMessageDialog(null,"Cliente incluído com sucesso!","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+        			
+        			limparFields();
         		}
         		catch(Exception erro)
         		{
@@ -492,8 +492,7 @@ public class WindowCrud extends JFrame
         				fieldRua.setText(logradouro.getLogradouro());
         				fieldBairro.setText(logradouro.getBairro());
         				fieldCidade.setText(logradouro.getCidade());
-        				fieldEstado.setText(logradouro.getEstado());        				
-        				
+        				fieldEstado.setText(logradouro.getEstado());
         			}
         		}
         		catch(Exception erro)
