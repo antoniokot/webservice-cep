@@ -479,7 +479,7 @@ public class WindowCrud extends JFrame
         fieldCEP.addKeyListener(new KeyAdapter() 
         {
         	@Override
-        	public void keyTyped(KeyEvent arg0)
+        	public void keyReleased(KeyEvent arg0) 
         	{
         		try
         		{
