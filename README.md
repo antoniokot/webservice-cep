@@ -1,6 +1,6 @@
 # ZIP code Web Service
 
-A system capable of find informations of an adress just using the ZIP code.
+A system capable of find informations of an address just using the ZIP code.
 
 ### Developers
 - [Antônio Hideto Borges Kotsubo](https://github.com/antoniokot)
